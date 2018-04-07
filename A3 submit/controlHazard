@@ -1,0 +1,56 @@
+# Graham Pomfret 0595 995 
+# This program is to demonstrate a control hazard
+# It creates a control hazard by taking a user input and putting it in s0, and in the next line it adds it to 42
+.data
+	prompt1: .asciiz "please enter your number "
+	Lesser: .asciiz "\nyour number is less than 10 added to 1 it is: "
+	Greater: .asciiz "\nyour number is greater than 10 added to 100 it is : "
+	
+.text
+	main:
+	# user number
+	li $v0, 4
+	la $a0, prompt1
+	syscall
+	
+	# CONTROL HAZARD
+	# this is a control hazard because it takes your number and sets a value to 1 or 100 depending on the value
+	# of your number in a branch statement immidiately before it
+	li $v0, 5
+	syscall
+	# moves it to $s0
+	move $s0, $v0
+	blt $s0, 10, LT10
+	bgt $s0, 9, GT10
+	back:
+	add $t0, $t1, $s0
+	
+	# prints value in t0
+	li $v0, 1
+	move $a0, $t0
+	syscall 
+	
+		# terminate program
+		li $v0, 10
+		syscall
+	
+	LT10:
+	# lesser
+	li $v0, 4
+	la $a0, Lesser
+	syscall
+	# sets t1 to 1
+	addi $t1, $zero, 1
+	# returns
+	j back
+	
+	GT10:
+	# greater
+	li $v0, 4
+	la $a0, Greater
+	syscall
+	# sets t1 to 100
+	add $t1, $zero, 100
+	# returns
+	j back
+	

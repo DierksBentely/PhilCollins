@@ -1,0 +1,37 @@
+# Graham Pomfret 0595 995 
+# This program is to demonstrate a control hazard
+# It creates a data hazard by taking a user input and putting it in s0, and in the next line it adds it to 42
+.data
+	prompt1: .asciiz "please enter your number "
+	conc: .asciiz "my number (42) + your number is : "
+	number1: .word 42
+.text
+	main:
+	# loads my number into t1
+	lw $t1, number1
+	# user number prompt
+	li $v0, 4
+	la $a0, prompt1
+	syscall
+	
+	# DATA HAZARD
+	# takes input for user's number	
+	li $v0, 5
+	syscall
+	# the reason this a data hazard is the value in v0 is obtained here and needs to finish being written to 
+	# before it can be added here, in the next instruction
+	add $t0, $t1, $v0
+		
+	# prints conclusion sentence
+	li $v0, 4
+	la $a0, conc
+	syscall
+	
+	# prints value in t0
+	li $v0, 1
+	move $a0, $t0
+	syscall 
+		# terminate program
+		li $v0, 10
+		syscall
+	

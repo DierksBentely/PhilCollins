@@ -1,0 +1,57 @@
+# Graham Pomfret
+# Computer organization and design
+# logical conditions != into everything
+.data
+	GT: .asciiz "A > B"
+	NGT: .asciiz "B > A"
+	
+.text
+	main:
+	# this is A
+	li $t0, 13
+	# this is B
+	li $t1, 11
+		
+	# jumps to the equal method
+	# jal equals
+	
+	# greater than method
+	greaterThan:
+	# subtracts 1 number from the other
+	sub $t2, $t1, $t0
+	# sets t3, and t4 to the resulting number
+	addi $t3, $t2, 0
+	addi $t4, $t2, 0
+	increment:
+	# adds 1 to t3 and subtracts 1 from t4
+	addi $t3, $t3, 1
+	subi $t4, $t4, 1
+	jal equals
+		
+	# terminates program
+	li $v0, 10
+	syscall
+	
+	# equals method 
+	equals:
+	# if t4 is not equal to 0, jump to other
+	bne $t4, 0, other
+	# if it is equal to zero it prints out confirmation
+	li $v0, 4
+	la $a0, NGT
+	syscall
+	j end
+	
+	other:
+	# other checks if t3 is equal to 0, if not increments again
+	bne $t3, 0, increment
+	# if it is equal to zero it prints out confirmaton
+	li $v0, 4
+	la $a0, GT
+	syscall
+	j end
+
+	end:
+	# ends the program
+	li $v0, 10
+	syscall

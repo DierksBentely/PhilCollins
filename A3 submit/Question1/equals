@@ -1,0 +1,31 @@
+# Graham Pomfret
+# Computer organization and design
+# logical conditions != into everything
+.data
+	EQ: .asciiz "A == B"
+	nEQ: .asciiz "A != B"
+
+.text
+	li $t0, 23
+	li $t1, 23
+	# equals method 
+	equals:
+	# branch not equals jump to not equal
+	bne $t0, $t1, notEqual
+	# else jump unconditionally to equal
+	j Equal
+	# equal prints that they are equal
+	Equal:
+	li $v0, 4
+	la $a0, EQ
+	syscall
+	# jumps back to where called from
+	jr $ra
+	# prints that they are not equal
+	notEqual:
+	li $v0, 4
+	la $a0, nEQ
+	syscall
+	# jumps back to where called from
+	jr $ra
+	
