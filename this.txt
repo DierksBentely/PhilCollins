@@ -1,0 +1,57 @@
+package Hearts;
+
+import java.awt.List;
+import java.io.*;
+import java.util.*;
+
+import com.sun.media.jfxmedia.logging.Logger;
+
+import java.sql.*;
+
+
+public class Export
+{
+	
+	public static void main(String args[]) throws Exception
+	{
+		ArrayList<String> resultSetArray = new ArrayList<>();
+		String userName = "root";
+		String passWord = "";
+		String url = "http://localhost/phpmyadmin"; // for me this was "http://localhost/phpmyadmin"
+				
+		Connection conn = DriverManager.getConnection(url, userName, passWord);
+
+		Statement stmt = conn.createStatement();
+		
+		ResultSet results = stmt.executeQuery("select * from medicalRecords");
+		int NumColumns = results.getMetaData().getColumnCount();
+		
+		while(results.next())
+		{
+			StringBuilder bld = new StringBuilder();
+			
+			for (int i = 1; i <= NumColumns; i++)
+			{
+				bld.append(String.format(String.valueOf(results.getString(i)))+ " ");
+			}
+			resultSetArray.add(bld.toString());
+		}
+		
+		
+		printToCsv(resultSetArray);
+
+	} 
+		
+	private static void printToCsv(ArrayList<String> results) throws Exception
+	{
+		File csvOutputFile = new File("my report");
+		FileWriter writer = new FileWriter (csvOutputFile, false);
+		
+		for (String mapping : results)
+		{
+			writer.write(mapping + "/n");
+		}
+		writer.close();
+	}
+
+}
