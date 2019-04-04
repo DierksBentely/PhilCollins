@@ -1,0 +1,134 @@
+<!-- Graham Pomfret 0595995
+	Assignment 3 Question 2
+	This is the a demo for the three.js library
+	the code is used in the how to post attatched in the seperate pdf--
+	
+	this isn't a game its just a couple of mesh graphics that demonstrate how objects,textures and animations work
+	-->
+<!doctype html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type='text/javascript' src='scripts/script.js' > </script>
+	<link rel='stylesheet' type='text/css' href='includes/Q2Main.css' > </style> 
+
+	<title> Graham's three.js how to</title>
+</head>
+
+<body>
+
+	<div class='topOfPage' >
+
+	<h1>
+		<img src='includes/logo.png' />
+		Graham's Blog 
+	</h1>
+
+
+	</div>
+	
+	<div class='adSpace'>
+	<!-- This is an ad to give the full authentic blog experience $$$$$$ -->
+		<img src='includes/obligatoryAd.png' id='mcLogo'/> 
+	</div>
+	
+	<div class='mainContent' >
+	
+	<p> Hey Guys. Welcome to my blog -- Green Eggs and Graham. </p> 
+	
+	<p> Today I want to show you guys one of the JavaScript libraries that I think is pretty darn cool, it’s called three.js. What three does is allows you to create 3D objects in a browser and have beautiful visuals directly on the webpage, without any additional software being installed.  </p>
+	
+	<p> It can be used for games, animations and I saw an example of a website that used it to showcase its furniture. It can do some pretty powerful things. So without further ado let me show you how to use it. </p>
+	
+	<p> Before you jump straight into doing stuff there are a couple things that need to be initialized first, you need: </p>
+	
+	<ol>
+		<li> A Scene: In this context a scene is in shorthand what is on screen. </li>
+		<li> A Camera: A camera would be the position that the user will start at, which can be modified to make them look like they are moving or looking around. </li>
+		<li> A Renderer: which makes the objects, once they have a mesh and a shape (more on this later). </li>
+	</ol>
+	
+	<p> So what these do is they create you a camera, so that will be where you are “looking” at the graphics from, that can be changed dynamically depending on where you need it. The Scene is the sort of like a backdrop so you add everything to the scene, you can have more than 1 depending on what the plan for it is, although for now 1 is good. Finally you need a renderer which allows the mesh objects to be rendered or displayed on the screen. Ok so you have that out of the way, we want to create our first object:  </p>
+	
+	<img src='includes/code/firstPicture.png' />
+	
+	<p> All objects need to be defined through geometry in the form of  </p>
+	
+	<img src='includes/code/newGeometry.png' />
+
+	<p> Where the blank is your type of geometry. There are many types but to start the basic ones are: </p>
+	
+	<ol>
+		<li> Square which can be made with THREE.BoxGeometry(x,y,z) the parameters are the dimensions of the square.  </li>
+		<li> Not to be confused with a Plane type which is a 2 dimensional square which can be made with THREE.PlaneGeometry(x,y). </li> 
+		<li> For Circles you have to use the THREE.SphereGeometry(x,y,z), the parameters for this one are radius, height segments and width segments, which determine how round the sphere is, the higher the more round it is. </li>
+	</ol>
+	
+	<p> There are many different types all available on the documentation so since those are the basic ones we will stick with those for now.  </p>
+	
+	<p> Now that we have our geometric item we need to make a material for it, so material is a mix of the color and the texture of the shape. There are again many of these available on the official documentation for the library (link provided at the bottom of the page). For now though we will identify our mesh with the simple MeshBasicMaterial:  </p>
+	
+	<img src='includes/code/basicMaterial.png' />
+
+	
+	<p> This will give you a very plain, very white item, with no shading which is a result of the basic material. So just to help demonstrate the power of Three.js replace that line and put in MeshNormalMaterial, like this: </p>
+	
+	<img src='includes/code/newMaterial.png' />
+
+	<p> Now that we have an object and a material we need to combine them, the THREE.Mesh() method works for that. It takes 2 parameters, one of type geometry, and one of type material. Plug in your items into the mesh and your code should look like this: </p>
+	
+	<img src='includes/code/newMesh.png' />
+	
+	<p> Almost done, we have to do 2 more things, so we need to add our new item to the scene. This is an easy one there is one line of code that looks like this: </p>
+	
+	<img src='includes/code/addToScene.png' />
+		
+	<p> Almost all set up, the last thing we need is to use that renderer that we made earlier actually display the objects on the screen. First thing to do is set the renderer size so it knows how big the area will be. So call the setSize() method for the renderer and give it a window size. A little trick is to give it window.innerWidth and window.outerWidth and it will fit it to the size of the screen being used, that would look like this: </p>
+	
+	<img src='includes/code/setRenderer.png' />
+	
+	<p> 	Great… well sort of, 3D components in Three make everything start at the exact same spot so that means that your object is at one point and the camera is inside the object, so the object is not super visible. So quickly just add in a line to offset your camera. So you can see your object being rendered. That would look something along the lines of this: </p>
+	
+	<img src='includes/code/cameraPosition.png' />
+
+	<p> The number would be a point on the graph, so the larger it is the smaller your item will be because when we set up the camera we used the THREE.PerspectiveCamera. This fact is a nice segue into the way items are positioned in the 3D space. </p>
+	
+	<p> All of the items in the scene are dropped right at (0,0,0), which is the origin of the graph, and the reason you can’t see it is because your camera was also at that same point. All items have specified coordinates which can be manipulated with $variable.position.coordinate = someInt, where coordinate is x,y, or z, and $variable is any object. The important ones to know are: </p>
+	
+	<ol> 
+		<li> Position – Which is where the object is located. </li>
+		<li> Rotate - This rotates the object </li>
+		<li> Size - This determines the size of the object </li>
+	</ol>
+	
+	<p> There are an abundance of other ways to manipulate them but that’s the gist of it. </p>
+	
+	<p> Now that you have a simple object the main draw of using Three.js is it has an method called requestAnimationFrame() which takes a function (itself) as a parameter, and it will call that method every time the monitor refreshes </p> 
+	
+	<p> Inside that method you want to put anything you want your animation to do using whichever loops or statements you need to get it done. So to make your object move to the left put in a the function a line like this: </p>
+	
+	<img src='includes/code/animate.png' />
+	
+	<p> This will call itself every time the monitor refreshes, your object will move .01 pixels to the left every time which is roughly 60 times per second on a standard monitor. The renderer is being updated at the end of the function which will make the object move smoothly. </p>
+	
+	<p> and thats all there is to it, to reiterate Three is a very powerful llibrary that gives you access to much more than what you can do without access to it. If you would like to take a look a little sample I put together so you can see how cool Three really is: that is available <a href='Q2.html' >here</a> and in the resources bar below </p>
+	
+	<p> If you checked out the example you will notice its almost like pong... almost its not actually pong. The ball will bounce if it hits the paddle or not, that is because the ball turns around at a set spot. Three.js doesn't have a graceful way to handle collision detection so its better for making things that don't need to worry too much about colliding with other objects, its possible to do in theory but its not reccomended due to the nature of the library's limitations. If collision detection is your goal, this is probably not the library for you </p>
+	
+	<p> Thanks for checking out my blog, don't forget to follow me on <a href='https://twitter.com/Renolocx' > twitter<a>, like me on <a href='https://www.facebook.com/people/Reno-Jackson/100011411798769' >facebook<a>, and message me on tinder! </p>
+	
+	</div>
+	
+	
+	<nav>
+		<h1> Other Resources </h1>
+		<ul>
+			<li> <a href='https://threejs.org/docs/'> Offical Documentation for Three.js </a> </li>
+			<li> <a href='https://loki.trentu.ca/~grahampomfret/3420/assignments/assignment1/Q4/aboutMe.html' > About Me </a> 
+			<li> <a href='Q2.html' >My Example</a>  AND  <a href='scripts/script.txt'>Code<a> </li>
+			<li> <a href='' > Other Blog Entries </a> </li> 
+		</ul>
+	</nav>
+</body>

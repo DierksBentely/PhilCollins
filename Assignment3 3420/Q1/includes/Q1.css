@@ -1,0 +1,22 @@
+/* h1 is used to seperate the sections into questions, to make it easier to tell where question x ends and question x+1 starts */
+h1
+{
+	background-color:lightblue;
+	color:white;
+}
+/* making the div for question 5 5x5 as per the question on the handout */
+#q5 div
+{
+	height:5em;
+	width:5em;
+/* making the background color blue so it is easier to see it doing what is intended*/
+	background-color: blue;
+}
+/* making the div for question 8 10x10 as per the question on the handout */
+#q8 div 
+{
+	/* making the background color red so it is easier to see it doing what is intended*/
+	background-color: red;
+	height:10em;
+	width:10em;
+}

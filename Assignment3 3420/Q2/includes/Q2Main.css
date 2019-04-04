@@ -1,0 +1,39 @@
+/*Graham Pomfret  0595995
+	Assignment 3 Question 2
+	This is the a demo for the three.js library
+	the code is used in the how to post attatched in the seperate pdf--
+	
+	this isn't a game its just a couple of mesh graphics that demonstrate how objects,textures and animations work
+	*/
+.adSpace
+{
+	float:left;
+}
+.topOfPage
+{
+	color:white;
+	background-color:black;
+	font-size:24pt;
+}
+.mainContent
+{
+	margin-left:20%;
+	text-indent:30px;
+}
+
+nav
+{
+	width:100%;
+	font-size:16pt;
+	background-color:green;
+	text-align:center;
+}
+body
+{
+	background-color:lightblue;
+	font-family:cursive;
+}
+li
+{
+	margin-left:5%;
+}

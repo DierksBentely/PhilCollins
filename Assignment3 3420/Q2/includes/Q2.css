@@ -1,0 +1,14 @@
+/*Graham Pomfret  0595995
+	Assignment 3 Question 2
+	This is the a demo for the three.js library
+	the code is used in the how to post attatched in the seperate pdf--
+	
+	this isn't a game its just a couple of mesh graphics that demonstrate how objects,textures and animations work
+	*/
+
+body
+{
+	position: fixed;
+	width:100%;
+	height: 100%;
+}
